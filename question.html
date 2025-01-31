@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Love Quiz</title>
+    <style>
+        body {
+            background-color: #FFB6C1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            text-align: center;
+            cursor: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"%3E%3Ctext y="20" font-size="20"%3E❤️%3C/text%3E%3C/svg%3E') 16 16, auto;
+        }
+
+        #question {
+            color: #8B4513;
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+        .btn-yes {
+            background-color: #FF69B4;
+            color: white;
+        }
+        .btn-no {
+            background-color: #FF1493;
+            color: white;
+        }
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+        .shake {
+            animation: shake 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://media1.tenor.com/m/MYFUQ09AxzEAAAAC/minions.gif" 
+        alt="A yellow minion with a red question mark above his head" 
+        style="max-width: 100%; height: auto; border-radius: 10px;">
+        <h1 id="question">Have u been a nice GF ?</h1>
+        <div class="buttons" id="buttonContainer">
+            <button class="btn btn-yes" id="yesBtn1">Yay</button>
+            <button class="btn btn-no" id="noBtn">No</button>
+        </div>
+    </div>
+
+    <script>
+        const question = document.getElementById('question');
+        const buttonContainer = document.getElementById('buttonContainer');
+        const noBtn = document.getElementById('noBtn');
+        let clickCount = 0;
+
+        noBtn.addEventListener('click', () => {
+            noBtn.classList.add('shake');
+            question.textContent = 'Stop lying, huh';
+            
+            setTimeout(() => {
+                noBtn.classList.remove('shake');
+                question.textContent = 'Have u been a nice GF ?';
+                
+                // Replace No button with two Yes buttons
+                buttonContainer.innerHTML = `
+                    <button class="btn btn-yes" id="yesBtn1">Yay</button>
+                    <button class="btn btn-yes" id="yesBtn2">Yay</button>
+                `;
+                
+                // Add click event to new Yes buttons
+                const yesBtn1 = document.getElementById('yesBtn1');
+                const yesBtn2 = document.getElementById('yesBtn2');
+                
+                yesBtn1.addEventListener('click', () => {
+                    window.location.href = 'choose.html'; // Remplace par le chemin réel de ta page
+                });
+                
+                yesBtn2.addEventListener('click', () => {
+                    window.location.href = 'choose.html'; // Remplace par le chemin réel de ta page
+                });
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

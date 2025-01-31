@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Explosion de Fleurs</title>
+    <style>
+        body {
+            background-color: #FFB6C1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            cursor: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"%3E%3Ctext y="20" font-size="20"%3E❤️%3C/text%3E%3C/svg%3E') 16 16, auto;
+        }
+
+        #invisible-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px; /* Largeur du bouton */
+            height: 100px; /* Hauteur du bouton */
+            background-color: transparent; /* Pas de fond */
+            border: none; /* Pas de bordure */
+            cursor: pointer; /* Curseur de clic */
+            z-index: 10; /* S'assure que le bouton est au-dessus des autres éléments */
+        }
+        h1 {
+            color: #8B4513;
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        #flower-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            background-image: url('/Users/edendalexis/Documents/valentine/site web/photo/8b08f724-911d-41b2-a809-c09c42a46a7a.jpg');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+        .flower {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0;
+            transition: all 2s ease-out;
+        }
+        .explosion-point {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hi mon bébé</h1>
+    <div id="flower-container">
+        <button id="invisible-button"></button>
+    </div>
+    <h1>click on ur cutie nose</h1>
+
+    <script>
+        const container = document.getElementById('flower-container');
+        const flowerEmojis = ['🌸'];
+        const numExplosionPoints = 7;
+        const flowersPerExplosion = 20;
+        document.addEventListener('DOMContentLoaded', createFlowerExplosion);
+
+        function createExplosionPoints() {
+            // Clear previous explosion points
+            const oldPoints = container.querySelectorAll('.explosion-point');
+            oldPoints.forEach(point => point.remove());
+
+            // Create new explosion points
+            for (let i = 0; i < numExplosionPoints; i++) {
+                const point = document.createElement('div');
+                point.classList.add('explosion-point');
+                
+                // Position points within the image
+                point.style.left = `${Math.random() * (container.offsetWidth)}px`;
+                point.style.top = `${Math.random() * (container.offsetHeight)}px`;
+                
+                container.appendChild(point);
+            }
+        }
+
+        function createFlowerExplosion() {
+            // Ensure explosion points exist
+            if (container.querySelectorAll('.explosion-point').length === 0) {
+                createExplosionPoints();
+            }
+
+            const explosionPoints = container.querySelectorAll('.explosion-point');
+
+            explosionPoints.forEach(point => {
+                for (let i = 0; i < flowersPerExplosion; i++) {
+                    const flower = document.createElement('div');
+                    flower.classList.add('flower');
+                    
+                    // Random flower emoji
+                    flower.textContent = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+                    
+                    // Start from explosion point
+                    flower.style.left = `${point.offsetLeft}px`;
+                    flower.style.top = `${point.offsetTop}px`;
+                    
+                    container.appendChild(flower);
+                    
+                    // Trigger reflow
+                    flower.offsetWidth;
+                    
+                    // Random explosion direction and distance
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = Math.random() * 300 + 100;
+                    
+                    flower.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) rotate(${Math.random() * 720}deg)`;
+                    flower.style.opacity = '1';
+                }
+            });
+
+            // Remove flowers after animation
+            setTimeout(() => {
+                const flowers = container.querySelectorAll('.flower');
+                flowers.forEach(flower => container.removeChild(flower));
+            }, 2000);
+        }
+
+        // Trigger explosion every few seconds
+        setInterval(createFlowerExplosion, 3000);
+
+        const invisibleButton = document.getElementById('invisible-button');
+
+        invisibleButton.addEventListener('click', () => {
+            window.location.href = 'question.html'; // Remplace par le chemin réel de ta page
+        });
+    </script>
+</body>
+</html>
